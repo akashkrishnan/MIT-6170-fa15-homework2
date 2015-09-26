@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Project 2: Game of Life</title>
+    <link rel="stylesheet" type="text/css" href="board.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+
+  <body>
+
+    <script src="GameOfLife.js"></script>
+    <script src="board.js"></script>
+
+    <div id="board"></div>
+
+    <script>
+
+      var board = Board( document.getElementById( 'board' ), 20, 20 ).setPopulation().showGridlines( true );
+      var game = GameOfLife( board );
+
+    </script>
+
+  </body>
+
+</html>
