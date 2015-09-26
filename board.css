@@ -21,6 +21,19 @@
 
 #board [row] [cell] {
   flex-grow: 1;
+  cursor: pointer;
+}
+
+#board[simulating] [row] [cell] {
+  cursor: wait;
+}
+
+#board:not([simulating]) [row] [cell]:not([alive]):hover {
+  background-color: green;
+}
+
+#board:not([simulating]) [row] [cell][alive]:hover {
+  background-color: red;
 }
 
 #board[show-gridlines] [row] [cell] {
