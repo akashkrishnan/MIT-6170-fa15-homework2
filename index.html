@@ -17,7 +17,17 @@
 
     <script>
 
-      var board = Board( document.getElementById( 'board' ), 20, 20 ).setPopulation().showGridlines( true );
+      var board = Board( document.getElementById( 'board' ), 6, 10 ).showGridlines( true );
+
+      board.setPopulation( [
+        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+        [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ],
+        [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ],
+        [ 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 ],
+        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+      ] );
+
       var game = GameOfLife( board );
 
     </script>
