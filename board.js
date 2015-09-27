@@ -20,17 +20,19 @@ var Board = function ( container, rows, cols ) {
 
   // Initialize cells and neighbors array
   var x, y, row, cell;
-  for ( x = 0; x < rows; x++ ) {
+  for ( y = 0; y < rows; y++ ) {
 
     // Create a row
     row = document.createElement( 'div' );
     row.setAttribute( 'row', '' );
 
     // Populate the row with cells
-    cells[ x ] = new Array( cols );
-    for ( y = 0; y < cols; y++ ) {
-      cell = cells[ x ][ y ] = document.createElement( 'div' );
+    cells[ y ] = new Array( cols );
+    for ( x = 0; x < cols; x++ ) {
+      cell = cells[ y ][ x ] = document.createElement( 'div' );
       cell.setAttribute( 'cell', '' );
+      cell.setAttribute( 'x', x );
+      cell.setAttribute( 'y', y );
       row.appendChild( cell );
     }
 
@@ -38,6 +40,30 @@ var Board = function ( container, rows, cols ) {
     container.appendChild( row );
 
   }
+
+  var clickListener = function ( e ) {
+
+    // Ensure no simulation
+    if ( !container.hasAttribute( 'simulating' ) ) {
+
+      // Ensure a cell was clicked
+      var cell = e.target;
+      if ( cell.hasAttribute( 'cell' ) ) {
+
+        // Check if cell is alive
+        if ( cell.hasAttribute( 'alive' ) ) {
+          cell.removeAttribute( 'alive' );
+        } else {
+          cell.setAttribute( 'alive', '' );
+        }
+
+      }
+
+    }
+
+  };
+
+  container.addEventListener( 'click', clickListener );
 
   /**
    * Populates cells in the board, randomly doing so if a model isn't provided.
@@ -139,6 +165,43 @@ var Board = function ( container, rows, cols ) {
     }
 
     return that;
+
+  };
+
+  /**
+   * Sets the simulation state of the board.
+   *
+   * @param {boolean} [simulating=true] - whether or not board is under simulation
+   * @returns {Board} - itself
+   */
+  that.setSimulating = function ( simulating ) {
+
+    // Show/hide gridlines by adding/removing attribute
+    if ( simulating || typeof simulating == null ) {
+      container.setAttribute( 'simulating', '' );
+    } else {
+      container.removeAttribute( 'simulating' );
+    }
+
+    return that;
+
+  };
+
+  /**
+   * Removes all elements created by this instance from its container. After being called, this instance has undefined
+   * functionality.
+   */
+  that.dispose = function () {
+
+    // Remove click event listener
+    container.removeEventListener( 'tap', clickListener );
+
+    // Get each row and remove it
+    var y, row;
+    for ( y = 0; y < rows; y++ ) {
+      row = cells[ y ][ 0 ].parentElement;
+      container.removeChild( row );
+    }
 
   };
 

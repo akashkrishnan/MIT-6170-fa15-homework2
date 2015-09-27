@@ -5,11 +5,6 @@
   flex-direction: column;
 }
 
-#board[show-gridlines] {
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
 #board [row] {
   display: flex;
   flex-grow: 1;
@@ -17,6 +12,10 @@
 
 #board[show-gridlines] [row] {
   border-top: 1px solid black;
+}
+
+#board[show-gridlines] [row]:last-of-type {
+  border-bottom: 1px solid black;
 }
 
 #board [row] [cell] {
@@ -38,6 +37,10 @@
 
 #board[show-gridlines] [row] [cell] {
   border-left: 1px solid black;
+}
+
+#board[show-gridlines] [row] [cell]:last-of-type {
+  border-right: 1px solid black;
 }
 
 #board [row] [cell][alive] {

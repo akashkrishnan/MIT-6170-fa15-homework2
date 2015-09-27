@@ -5,3 +5,25 @@ body {
   bottom: 0;
   right: 0;
 }
+
+[action-bar] {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+[action-bar] [button] {
+  padding: 10px;
+  border: 1px solid black;
+  margin-right: 10px;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+[action-bar] [button]:last-of-type {
+  margin-right: 0;
+}

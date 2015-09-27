@@ -13,7 +13,12 @@
     <script src="GameOfLife.js"></script>
     <script src="board.js"></script>
 
-    <div id="board"></div>
+    <div id="board">
+      <div action-bar>
+        <div button simulate play>Play</div>
+        <div button dispose>Dispose</div>
+      </div>
+    </div>
 
     <script>
 
@@ -29,6 +34,26 @@
       ] );
 
       var game = GameOfLife( board );
+
+      document.querySelector( '[button][simulate]' ).addEventListener( 'click', function ( e ) {
+        if ( e.target.hasAttribute( 'play' ) ) {
+          e.target.removeAttribute( 'play' );
+          e.target.innerHTML = 'Pause';
+          board.setSimulating( true );
+          e.target.setAttribute( 'pause', '' );
+        } else if ( e.target.hasAttribute( 'pause' ) ) {
+          e.target.removeAttribute( 'pause' );
+          e.target.innerHTML = 'Play';
+          board.setSimulating( false );
+          e.target.setAttribute( 'play', '' );
+        } else {
+          console.error( 'You should not be seeing this.' );
+        }
+      } );
+
+      document.querySelector( '[button][dispose]' ).addEventListener( 'click', function () {
+        board.dispose();
+      } );
 
     </script>
 
