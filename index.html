@@ -16,6 +16,7 @@
     <div id="board">
       <div action-bar>
         <div button simulate play>Play</div>
+        <div button reset>Reset</div>
         <div button dispose>Dispose</div>
       </div>
     </div>
@@ -37,18 +38,31 @@
 
       document.querySelector( '[button][simulate]' ).addEventListener( 'click', function ( e ) {
         if ( e.target.hasAttribute( 'play' ) ) {
+          game.startSimulation();
           e.target.removeAttribute( 'play' );
-          e.target.innerHTML = 'Pause';
-          board.setSimulating( true );
           e.target.setAttribute( 'pause', '' );
+          e.target.innerHTML = 'Pause';
         } else if ( e.target.hasAttribute( 'pause' ) ) {
+          game.pauseSimulation();
           e.target.removeAttribute( 'pause' );
-          e.target.innerHTML = 'Play';
-          board.setSimulating( false );
           e.target.setAttribute( 'play', '' );
+          e.target.innerHTML = 'Play';
         } else {
           console.error( 'You should not be seeing this.' );
         }
+      } );
+
+      document.querySelector( '[button][reset]' ).addEventListener( 'click', function () {
+
+        game.resetSimulation();
+
+        var l = document.querySelector( '[button][pause]' );
+        if ( l ) {
+          l.removeAttribute( 'pause' );
+          l.setAttribute( 'play', '' );
+          l.innerHTML = 'Play';
+        }
+
       } );
 
       document.querySelector( '[button][dispose]' ).addEventListener( 'click', function () {
