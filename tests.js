@@ -13,9 +13,14 @@ QUnit.test( '1x1 Unpopulated', function ( assert ) {
   assert.deepEqual( board.getPopulation(), [ [ 0 ] ], 'Population.' );
 
   // GUI
-  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 1, 'Rows GUI.' );
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 1, 'Rows in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 1, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][allive]' ).length, 0, 'Living cells in GUI.' );
+
+  // GUI Dispose
+  board.dispose();
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
+  assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
 
 } );
 
@@ -39,6 +44,11 @@ QUnit.test( '1x5 Unpopulated', function ( assert ) {
   assert.strictEqual( con.querySelectorAll( '[row]' ).length, 1, 'Rows GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 5, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][alive]' ).length, 0, 'Living cells in GUI.' );
+
+  // GUI Dispose
+  board.dispose();
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
+  assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
 
 } );
 
@@ -67,6 +77,11 @@ QUnit.test( '5x1 Unpopulated', function ( assert ) {
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 5, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][alive]' ).length, 0, 'Living cells in GUI.' );
 
+  // GUI Dispose
+  board.dispose();
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
+  assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
+
 } );
 
 QUnit.test( '5x5 Unpopulated', function ( assert ) {
@@ -93,6 +108,11 @@ QUnit.test( '5x5 Unpopulated', function ( assert ) {
   assert.strictEqual( con.querySelectorAll( '[row]' ).length, 5, 'Rows GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 25, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][alive]' ).length, 0, 'Living cells in GUI.' );
+
+  // GUI Dispose
+  board.dispose();
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
+  assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
 
 } );
 
@@ -130,5 +150,10 @@ QUnit.test( '6x10 Populated', function ( assert ) {
   assert.strictEqual( con.querySelectorAll( '[row]' ).length, 6, 'Rows GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 60, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][alive]' ).length, 6, 'Living cells in GUI.' );
+
+  // GUI Dispose
+  board.dispose();
+  assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
+  assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
 
 } );
