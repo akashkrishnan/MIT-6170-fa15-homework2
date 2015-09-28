@@ -13,7 +13,35 @@ var GameOfLife = function ( board ) {
   var simulationInterval;
 
   var simulator = function () {
-    console.log( 'next' );
+
+    // Get copy of populate that we can modify
+    var pop = board.getPopulation();
+    var n;
+
+    // Loop through rows
+    pop.forEach( function ( row, y ) {
+
+      // Loop through cells
+      row.forEach( function ( cell, x ) {
+
+        n = board.getNumNeighbors( x, y );
+
+        // Handle alive/dead cells separately
+        if ( cell ) {
+          if ( n < 3 || n > 4 ) {
+            pop[ y ][ x ] = 0;
+          }
+        } else if ( n === 3 ) {
+          pop[ y ][ x ] = 1;
+        }
+
+      } );
+
+    } );
+
+    // Update board's population with modified population
+    board.setPopulation( pop );
+
   };
 
   that.startSimulation = function () {
@@ -22,7 +50,7 @@ var GameOfLife = function ( board ) {
     }
     population = board.getPopulation();
     board.setSimulating( true );
-    simulationInterval = setInterval( simulator, 500 );
+    simulationInterval = setInterval( simulator, 100 );
   };
 
   that.pauseSimulation = function () {
