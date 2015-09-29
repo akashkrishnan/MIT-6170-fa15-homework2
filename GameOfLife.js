@@ -14,33 +14,19 @@ var GameOfLife = function ( board ) {
 
   var simulator = function () {
 
-    // Get copy of populate that we can modify
-    var pop = board.getPopulation();
-    var n;
+    // Update board's population
+    board.map( function ( alive, x, y ) {
 
-    // Loop through rows
-    pop.forEach( function ( row, y ) {
+      var n = board.getNumNeighbors( x, y );
 
-      // Loop through cells
-      row.forEach( function ( cell, x ) {
-
-        n = board.getNumNeighbors( x, y );
-
-        // Handle alive/dead cells separately
-        if ( cell ) {
-          if ( n < 3 || n > 4 ) {
-            pop[ y ][ x ] = 0;
-          }
-        } else if ( n === 3 ) {
-          pop[ y ][ x ] = 1;
-        }
-
-      } );
+      // Handle alive/dead cells separately
+      if ( alive ) {
+        return ( n < 3 || n > 4 ) ? 0 : 1;
+      } else {
+        return n === 3 ? 1 : 0;
+      }
 
     } );
-
-    // Update board's population with modified population
-    board.setPopulation( pop );
 
   };
 

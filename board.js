@@ -107,7 +107,7 @@ var Board = function ( container, rows, cols ) {
 
     var pop = new Array( rows );
 
-    // Loops through rows
+    // Loop through rows
     cells.forEach( function ( row, y ) {
 
       pop[ y ] = new Array( cols );
@@ -181,6 +181,50 @@ var Board = function ( container, rows, cols ) {
       container.setAttribute( 'simulating', '' );
     } else {
       container.removeAttribute( 'simulating' );
+    }
+
+    return that;
+
+  };
+
+  /**
+   * @callback mapCallback
+   * @param {number} alive - cell's current alive state: 0 or 1
+   * @param {number} x - cell's x-coordinate
+   * @param {number} y - cell's y-coordinate
+   * @returns {number} - cell's new alive state: 0 or 1
+   */
+
+  /**
+   * Applies a function to each cell in the board. The operation is atomic, so previous changes do not affect future
+   * changes within the same map call.
+   *
+   * @param {mapCallback} fn - function to apply to each cell in this Board
+   * @returns {Board} - itself
+   */
+  that.map = function ( fn ) {
+
+    // Ensure fn is a function
+    if ( typeof fn === 'function' ) {
+
+      var pop = new Array( rows );
+
+      // Loop through rows
+      cells.forEach( function ( row, y ) {
+
+        pop[ y ] = new Array( cols );
+
+        // Loop through columns
+        row.forEach( function ( cell, x ) {
+          pop[ y ][ x ] = fn( cell.hasAttribute( 'alive' ), x, y );
+        } );
+
+      } );
+
+      that.setPopulation( pop );
+
+    } else {
+      console.error( 'Received invalid argument. Expected function but found ' + typeof fn + '.' );
     }
 
     return that;
