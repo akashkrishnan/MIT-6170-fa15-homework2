@@ -15,18 +15,7 @@ var GameOfLife = function ( board ) {
   var simulator = function () {
 
     // Update board's population
-    board.map( function ( alive, x, y ) {
-
-      var n = board.getNumNeighbors( x, y );
-
-      // Handle alive/dead cells separately
-      if ( alive ) {
-        return ( n < 3 || n > 4 ) ? 0 : 1;
-      } else {
-        return n === 3 ? 1 : 0;
-      }
-
-    } );
+    board.map( Rules().original );
 
   };
 
@@ -36,7 +25,7 @@ var GameOfLife = function ( board ) {
     }
     population = board.getPopulation();
     board.setSimulating( true );
-    simulationInterval = setInterval( simulator, 100 );
+    simulationInterval = setInterval( simulator, 25 );
   };
 
   that.pauseSimulation = function () {

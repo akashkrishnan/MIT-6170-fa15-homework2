@@ -12,18 +12,18 @@
 
     <script src="GameOfLife.js"></script>
     <script src="board.js"></script>
+    <script src="rules.js"></script>
 
     <div id="board">
       <div action-bar>
         <div button simulate play>Play</div>
         <div button reset>Reset</div>
-        <div button dispose>Dispose</div>
       </div>
     </div>
 
     <script>
 
-      var board = Board( document.getElementById( 'board' ), 100, 100 ).showGridlines( true );
+      var board = Board( document.getElementById( 'board' ) ).rows( 100 ).cols( 100 ).gridlines( true ).build();
 
       var game = GameOfLife( board );
 
@@ -54,10 +54,6 @@
           l.innerHTML = 'Play';
         }
 
-      } );
-
-      document.querySelector( '[button][dispose]' ).addEventListener( 'click', function () {
-        board.dispose();
       } );
 
     </script>

@@ -1,6 +1,6 @@
 #board {
-  width: 100%;
-  height: 100%;
+  width: 98vmin;
+  height: 98vmin;
   display: flex;
   flex-direction: column;
 }
@@ -10,11 +10,15 @@
   flex-grow: 1;
 }
 
+#board [row]:nth-of-type(2) {
+  border-top: 1px solid black;
+}
+
 #board[show-gridlines] [row] {
   border-top: 1px solid black;
 }
 
-#board[show-gridlines] [row]:last-of-type {
+#board [row]:last-of-type {
   border-bottom: 1px solid black;
 }
 
@@ -35,11 +39,15 @@
   background-color: red;
 }
 
+#board [row] [cell]:first-of-type {
+  border-left: 1px solid black;
+}
+
 #board[show-gridlines] [row] [cell] {
   border-left: 1px solid black;
 }
 
-#board[show-gridlines] [row] [cell]:last-of-type {
+#board [row] [cell]:last-of-type {
   border-right: 1px solid black;
 }
 
