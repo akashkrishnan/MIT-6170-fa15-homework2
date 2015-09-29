@@ -14,7 +14,7 @@
     <script src="board.js"></script>
     <script src="rules.js"></script>
 
-    <div id="board">
+    <div board>
       <div action-bar>
         <div button simulate play>Play</div>
         <div button reset>Reset</div>
@@ -23,7 +23,7 @@
 
     <script>
 
-      var board = Board( document.getElementById( 'board' ) ).rows( 100 ).cols( 100 ).gridlines( true ).build();
+      var board = Board( document.querySelector( 'div[board]' ) ).rows( 100 ).cols( 100 ).gridlines( true ).build();
 
       var game = GameOfLife( board );
 

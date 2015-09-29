@@ -1,56 +1,56 @@
-#board {
+div[board] {
   width: 98vmin;
   height: 98vmin;
   display: flex;
   flex-direction: column;
 }
 
-#board [row] {
+div[board] [row] {
   display: flex;
   flex-grow: 1;
 }
 
-#board [row]:nth-of-type(2) {
+div[board] [row]:nth-of-type(2) {
   border-top: 1px solid black;
 }
 
-#board[show-gridlines] [row] {
+div[board][show-gridlines] [row] {
   border-top: 1px solid black;
 }
 
-#board [row]:last-of-type {
+div[board] [row]:last-of-type {
   border-bottom: 1px solid black;
 }
 
-#board [row] [cell] {
+div[board] [row] [cell] {
   flex-grow: 1;
   cursor: pointer;
 }
 
-#board[simulating] [row] [cell] {
+div[board][simulating] [row] [cell] {
   cursor: wait;
 }
 
-#board:not([simulating]) [row] [cell]:not([alive]):hover {
+div[board]:not([simulating]) [row] [cell]:not([alive]):hover {
   background-color: green;
 }
 
-#board:not([simulating]) [row] [cell][alive]:hover {
+div[board]:not([simulating]) [row] [cell][alive]:hover {
   background-color: red;
 }
 
-#board [row] [cell]:first-of-type {
+div[board] [row] [cell]:first-of-type {
   border-left: 1px solid black;
 }
 
-#board[show-gridlines] [row] [cell] {
+div[board][show-gridlines] [row] [cell] {
   border-left: 1px solid black;
 }
 
-#board [row] [cell]:last-of-type {
+div[board] [row] [cell]:last-of-type {
   border-right: 1px solid black;
 }
 
-#board [row] [cell][alive] {
+div[board] [row] [cell][alive] {
   background-color: black;
 }
