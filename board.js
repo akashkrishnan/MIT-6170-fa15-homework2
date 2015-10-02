@@ -110,6 +110,8 @@ var Board = function ( container, rows, cols ) {
       that.dispose();
     }
 
+    var frag = document.createDocumentFragment();
+
     cells = new Array( rows );
 
     // Initialize cells and neighbors array
@@ -130,10 +132,13 @@ var Board = function ( container, rows, cols ) {
         row.appendChild( cell );
       }
 
-      // Add row to board
-      container.appendChild( row );
+      // Add row to board fragment
+      frag.appendChild( row );
 
     }
+
+    // Add board fragment to container
+    container.appendChild( frag );
 
     // Listen to click events
     container.addEventListener( 'click', clickListener );
@@ -162,12 +167,16 @@ var Board = function ( container, rows, cols ) {
         // Loop through columns
         row.forEach( function ( cell, x ) {
 
-          // Randomly generate cell's living state
+          // Randomly generate cell's living state if model not provided
           alive = model ? model[ y ][ x ] : Math.round( Math.random() );
-          if ( alive ) {
-            cell.setAttribute( 'alive', '' );
-          } else {
-            cell.removeAttribute( 'alive' );
+
+          // Only update alive attribute if we need to change it
+          if ( cell.hasAttribute( 'alive' ) != alive ) {
+            if ( alive ) {
+              cell.setAttribute( 'alive', '' );
+            } else {
+              cell.removeAttribute( 'alive' );
+            }
           }
 
         } );
