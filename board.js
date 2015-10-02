@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Constructs and returns a Board object. The Board object also renders itself in the DOM.
  *

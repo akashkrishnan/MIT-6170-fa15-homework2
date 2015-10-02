@@ -11,12 +11,14 @@
   <body>
 
     <script src="GameOfLife.js"></script>
+    <script src="preset-selector.js"></script>
     <script src="board.js"></script>
     <script src="rules.js"></script>
 
     <div board>
       <div action-bar>
         <div></div>
+        <div preset-selector></div>
         <div button simulate play>Play</div>
         <div button reset>Reset</div>
       </div>
@@ -24,48 +26,52 @@
 
     <script>
 
-      // Create a new 50x50 board that shows gridlines
-      var board = Board( document.querySelector( 'div[board]' ) ).rows( 50 ).cols( 50 ).gridlines( true ).build();
+      (function () {
 
-      // Create a new simulator with the new oard and original rules
-      var game = GameOfLife( board ).rules( OriginalRules() );
+        // Create a new 50x50 board that shows gridlines
+        var board = Board( document.querySelector( 'div[board]' ) ).rows( 50 ).cols( 50 ).gridlines( true ).build();
 
-      // Play/pause simulation button toggle
-      document.querySelector( '[button][simulate]' ).addEventListener( 'click', function ( e ) {
-        if ( e.target.hasAttribute( 'play' ) ) {
+        // Create a new simulator with the new oard and original rules
+        var game = GameOfLife( board ).rules( OriginalRules() );
 
-          // Play button pressed; start simulation
-          game.startSimulation();
-          e.target.removeAttribute( 'play' );
-          e.target.setAttribute( 'pause', '' );
-          e.target.innerHTML = 'Pause';
+        // Play/pause simulation button toggle
+        document.querySelector( '[button][simulate]' ).addEventListener( 'click', function ( e ) {
+          if ( e.target.hasAttribute( 'play' ) ) {
 
-        } else if ( e.target.hasAttribute( 'pause' ) ) {
+            // Play button pressed; start simulation
+            game.startSimulation();
+            e.target.removeAttribute( 'play' );
+            e.target.setAttribute( 'pause', '' );
+            e.target.innerHTML = 'Pause';
 
-          // Pause button pressed; pause the simulation
-          game.pauseSimulation();
-          e.target.removeAttribute( 'pause' );
-          e.target.setAttribute( 'play', '' );
-          e.target.innerHTML = 'Play';
+          } else if ( e.target.hasAttribute( 'pause' ) ) {
 
-        } else {
-          console.error( 'You should not be seeing this.' );
-        }
-      } );
+            // Pause button pressed; pause the simulation
+            game.pauseSimulation();
+            e.target.removeAttribute( 'pause' );
+            e.target.setAttribute( 'play', '' );
+            e.target.innerHTML = 'Play';
 
-      // Reset simulation button
-      document.querySelector( '[button][reset]' ).addEventListener( 'click', function () {
+          } else {
+            console.error( 'You should not be seeing this.' );
+          }
+        } );
 
-        game.resetSimulation();
+        // Reset simulation button
+        document.querySelector( '[button][reset]' ).addEventListener( 'click', function () {
 
-        var l = document.querySelector( '[button][pause]' );
-        if ( l ) {
-          l.removeAttribute( 'pause' );
-          l.setAttribute( 'play', '' );
-          l.innerHTML = 'Play';
-        }
+          game.resetSimulation();
 
-      } );
+          var l = document.querySelector( '[button][pause]' );
+          if ( l ) {
+            l.removeAttribute( 'pause' );
+            l.setAttribute( 'play', '' );
+            l.innerHTML = 'Play';
+          }
+
+        } );
+
+      })();
 
     </script>
 

@@ -1,3 +1,11 @@
+'use strict';
+
+/**
+ * Constructs and returns a Rules object that contains functions that define the rules of a particular game.
+ *
+ * @returns {Rules} - constructed Rules object
+ * @constructor
+ */
 var Rules = function () {
 
   var that = Object.create( Rules.prototype );
@@ -17,6 +25,12 @@ var Rules = function () {
 
 };
 
+/**
+ * Constructs and returns an OriginalRules object that contains functions that define the original rules of the game.
+ *
+ * @returns {Rules} - constructed Rules object
+ * @constructor
+ */
 var OriginalRules = function () {
 
   var that = Object.create( Rules.prototype );

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Constructs and returns a GameOfLife object that follows original rules.
  *
