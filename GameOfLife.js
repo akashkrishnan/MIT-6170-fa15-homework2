@@ -7,7 +7,7 @@
  */
 var GameOfLife = function ( board ) {
 
-  var that = Object.create( GameOfLife );
+  var that = Object.create( GameOfLife.prototype );
 
   var population = board.getPopulation();
   var simulationInterval;

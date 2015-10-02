@@ -133,6 +133,14 @@ QUnit.test( '6x10 Populated', function ( assert ) {
     [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
     [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
   ];
+  var nextPopulation = [
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+  ];
   var con = document.createElement( 'div' );
   var board = Board( con ).rows( 6 ).cols( 10 ).build().setPopulation( population );
 
@@ -160,14 +168,256 @@ QUnit.test( '6x10 Populated', function ( assert ) {
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 60, 'Cells in GUI.' );
   assert.strictEqual( con.querySelectorAll( '[cell][alive]' ).length, 6, 'Living cells in GUI.' );
 
-  // Next generation
-  board.update( Rules().original );
-
-  console.log( board.getPopulation() );
-
   // GUI Dispose
   board.dispose();
   assert.strictEqual( con.querySelectorAll( '[row]' ).length, 0, 'Rows in GUI after dispose.' );
   assert.strictEqual( con.querySelectorAll( '[cell]' ).length, 0, 'Cells in GUI after dispose.' );
+
+} );
+
+
+QUnit.module( 'Rules' );
+
+QUnit.test( 'OriginalRules', function ( assert ) {
+
+  var rules = OriginalRules();
+
+  assert.strictEqual( rules.isCellAlive( 0, 0 ), 0, 'Alive: 0, Neighbors: 0' );
+  assert.strictEqual( rules.isCellAlive( 0, 1 ), 0, 'Alive: 0, Neighbors: 1' );
+  assert.strictEqual( rules.isCellAlive( 0, 2 ), 0, 'Alive: 0, Neighbors: 2' );
+  assert.strictEqual( rules.isCellAlive( 0, 3 ), 1, 'Alive: 0, Neighbors: 3' );
+  assert.strictEqual( rules.isCellAlive( 0, 4 ), 0, 'Alive: 0, Neighbors: 4' );
+  assert.strictEqual( rules.isCellAlive( 0, 5 ), 0, 'Alive: 0, Neighbors: 5' );
+  assert.strictEqual( rules.isCellAlive( 0, 6 ), 0, 'Alive: 0, Neighbors: 6' );
+  assert.strictEqual( rules.isCellAlive( 0, 7 ), 0, 'Alive: 0, Neighbors: 7' );
+  assert.strictEqual( rules.isCellAlive( 0, 8 ), 0, 'Alive: 0, Neighbors: 8' );
+
+  assert.strictEqual( rules.isCellAlive( 1, 0 ), 0, 'Alive: 1, Neighbors: 0' );
+  assert.strictEqual( rules.isCellAlive( 1, 1 ), 0, 'Alive: 1, Neighbors: 1' );
+  assert.strictEqual( rules.isCellAlive( 1, 2 ), 1, 'Alive: 1, Neighbors: 2' );
+  assert.strictEqual( rules.isCellAlive( 1, 3 ), 1, 'Alive: 1, Neighbors: 3' );
+  assert.strictEqual( rules.isCellAlive( 1, 4 ), 0, 'Alive: 1, Neighbors: 4' );
+  assert.strictEqual( rules.isCellAlive( 1, 5 ), 0, 'Alive: 1, Neighbors: 5' );
+  assert.strictEqual( rules.isCellAlive( 1, 6 ), 0, 'Alive: 1, Neighbors: 6' );
+  assert.strictEqual( rules.isCellAlive( 1, 7 ), 0, 'Alive: 1, Neighbors: 7' );
+  assert.strictEqual( rules.isCellAlive( 1, 8 ), 0, 'Alive: 1, Neighbors: 8' );
+
+} );
+
+
+QUnit.module( 'Simulation' );
+
+QUnit.test( 'Still Life: Block', function ( assert ) {
+
+  var pop = [
+    [ 0, 0, 0, 0 ],
+    [ 0, 1, 1, 0 ],
+    [ 0, 1, 1, 0 ],
+    [ 0, 0, 0, 0 ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 4 ).cols( 4 ).build().setPopulation( pop );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop, 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Still Life: Boat', function ( assert ) {
+
+  var pop = [
+    [ 0, 0, 0, 0, 0 ],
+    [ 0, 1, 1, 0, 0 ],
+    [ 0, 1, 0, 1, 0 ],
+    [ 0, 0, 1, 0, 0 ],
+    [ 0, 0, 0, 0, 0 ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 5 ).cols( 5 ).build().setPopulation( pop );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop, 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Still Life: Beehive', function ( assert ) {
+
+  var pop = [
+    [ 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 1, 1, 0, 0 ],
+    [ 0, 1, 0, 0, 1, 0 ],
+    [ 0, 0, 1, 1, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0 ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 5 ).cols( 6 ).build().setPopulation( pop );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop, 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Still Life: Loaf', function ( assert ) {
+
+  var pop = [
+    [ 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 1, 1, 0, 0 ],
+    [ 0, 1, 0, 0, 1, 0 ],
+    [ 0, 0, 1, 0, 1, 0 ],
+    [ 0, 0, 0, 1, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0 ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 6 ).cols( 6 ).build().setPopulation( pop );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop, 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Oscillator: Blinker (period 2)', function ( assert ) {
+
+  var pop = [
+    [
+      [ 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0 ],
+      [ 0, 1, 1, 1, 0 ],
+      [ 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0 ]
+    ],
+    [
+      [ 0, 0, 0, 0, 0 ],
+      [ 0, 0, 1, 0, 0 ],
+      [ 0, 0, 1, 0, 0 ],
+      [ 0, 0, 1, 0, 0 ],
+      [ 0, 0, 0, 0, 0 ]
+    ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 5 ).cols( 5 ).build().setPopulation( pop[ 0 ] );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop[ (i + 1) % 2 ], 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Oscillator: Toad (period 2)', function ( assert ) {
+
+  var pop = [
+    [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 1, 1, 1, 0 ],
+      [ 0, 1, 1, 1, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ]
+    ],
+    [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 1, 0, 0 ],
+      [ 0, 1, 0, 0, 1, 0 ],
+      [ 0, 1, 0, 0, 1, 0 ],
+      [ 0, 0, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ]
+    ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 6 ).cols( 6 ).build().setPopulation( pop[ 0 ] );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop[ (i + 1) % 2 ], 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Oscillator: Beacon (period 2)', function ( assert ) {
+
+  var pop = [
+    [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 1, 1, 0, 0, 0 ],
+      [ 0, 1, 1, 0, 0, 0 ],
+      [ 0, 0, 0, 1, 1, 0 ],
+      [ 0, 0, 0, 1, 1, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ]
+    ],
+    [
+      [ 0, 0, 0, 0, 0, 0 ],
+      [ 0, 1, 1, 0, 0, 0 ],
+      [ 0, 1, 0, 0, 0, 0 ],
+      [ 0, 0, 0, 0, 1, 0 ],
+      [ 0, 0, 0, 1, 1, 0 ],
+      [ 0, 0, 0, 0, 0, 0 ]
+    ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 6 ).cols( 6 ).build().setPopulation( pop[ 0 ] );
+  var rules = OriginalRules();
+
+  for ( var i = 0; i < 15; i++ ) {
+    board.update( rules.isCellAlive );
+    assert.deepEqual( board.getPopulation(), pop[ (i + 1) % 2 ], 'Population after update.' );
+  }
+
+} );
+
+QUnit.test( 'Oscillator: Pentadecathlon (period 15)', function ( assert ) {
+
+  var pop = [
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+  ];
+
+  var con = document.createElement( 'div' );
+  var board = Board( con ).rows( 18 ).cols( 11 ).build().setPopulation( pop );
+  var rules = OriginalRules();
+
+  var i, j;
+  for ( i = 0; i < 3; i++ ) {
+    for ( j = 0; j < 15; j++ ) {
+      board.update( rules.isCellAlive );
+    }
+    assert.deepEqual( board.getPopulation(), pop, 'Population after 15 updates.' );
+  }
 
 } );

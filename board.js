@@ -9,7 +9,7 @@
  */
 var Board = function ( container, rows, cols ) {
 
-  var that = Object.create( Board );
+  var that = Object.create( Board.prototype );
 
   // Initialize row and column counts
   rows = rows || 20;
@@ -169,7 +169,7 @@ var Board = function ( container, rows, cols ) {
         row.forEach( function ( cell, x ) {
 
           // Randomly generate cell's living state if model not provided
-          alive = model ? model[ y ][ x ] : Math.round( Math.random() );
+          alive = model ? model[ y ][ x ] || 0 : Math.round( Math.random() );
 
           // Only update alive attribute if we need to change it
           if ( cell.hasAttribute( 'alive' ) != alive ) {
