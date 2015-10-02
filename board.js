@@ -19,8 +19,9 @@ var Board = function ( container, rows, cols ) {
   var cells;
 
   /**
+   * Handles a click event in the board. Toggles the target cell between alive to dead.
    *
-   * @param e
+   * @param {Event} e
    */
   var clickListener = function ( e ) {
 
@@ -228,7 +229,7 @@ var Board = function ( container, rows, cols ) {
   };
 
   /**
-   * Computes and returns the number of living neighbors, including itself.
+   * Computes and returns the number of living neighbors.
    *
    * @param {number} x - x-coordinate of cell
    * @param {number} y - y-coordinate of cell
@@ -239,18 +240,21 @@ var Board = function ( container, rows, cols ) {
     // Ensure board has been build
     if ( cells ) {
 
-      var n = 0;
+      var _x, _y, n = 0;
 
       var x1 = Math.max( x - 1, 0 );
       var x2 = Math.min( x + 2, cols );
       var y1 = Math.max( y - 1, 0 );
       var y2 = Math.min( y + 2, rows );
 
-      for ( x = x1; x < x2; x++ ) {
-        for ( y = y1; y < y2; y++ ) {
-          n += cells[ y ][ x ].hasAttribute( 'alive' );
+      for ( _x = x1; _x < x2; _x++ ) {
+        for ( _y = y1; _y < y2; _y++ ) {
+          n += cells[ _y ][ _x ].hasAttribute( 'alive' );
         }
       }
+
+      // Remove itself from count
+      n -= cells[ y ][ x ].hasAttribute( 'alive' );
 
       return n;
 
@@ -265,20 +269,20 @@ var Board = function ( container, rows, cols ) {
   };
 
   /**
-   * @callback mapCallback
-   * @param {number} alive - cell's current alive state: 0 or 1
-   * @param {number} n - the number of living neighbors, including itself
+   * @callback updateCallback
+   * @param {number} alive - 1 if cell is currently alive; 0 if cell is currently dead
+   * @param {number} n - the number of living neighbors
    * @returns {number} - cell's new alive state: 0 or 1
    */
 
   /**
    * Applies a function to each cell in the board. The operation is atomic, so previous changes do not affect future
-   * changes within the same map call.
+   * changes within the same update call.
    *
-   * @param {mapCallback} fn - function to apply to each cell in this Board
+   * @param {updateCallback} fn - function to apply to each cell in this Board
    * @returns {Board} - itself
    */
-  that.map = function ( fn ) {
+  that.update = function ( fn ) {
 
     // Ensure board has been built
     if ( cells ) {
@@ -300,6 +304,7 @@ var Board = function ( container, rows, cols ) {
 
         } );
 
+        // After computing new population, set the board's population to the new population
         that.setPopulation( pop );
 
       } else {

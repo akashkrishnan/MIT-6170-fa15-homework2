@@ -1584,11 +1584,11 @@
             return innerEquiv( bArray, aArray );
           },
 
-          "map": function( b, a ) {
+          "update": function( b, a ) {
             var aArray, bArray;
 
             // b could be any object here
-            if ( QUnit.objectType( b ) !== "map" ) {
+            if ( QUnit.objectType( b ) !== "update" ) {
               return false;
             }
 
@@ -1863,7 +1863,7 @@
 
             dump.up();
             keys = [];
-            for ( key in map ) {
+            for ( key in update ) {
               keys.push( key );
             }
 
@@ -1871,14 +1871,14 @@
             nonEnumerableProperties = [ "message", "name" ];
             for ( i in nonEnumerableProperties ) {
               key = nonEnumerableProperties[ i ];
-              if ( key in map && inArray( key, keys ) < 0 ) {
+              if ( key in update && inArray( key, keys ) < 0 ) {
                 keys.push( key );
               }
             }
             keys.sort();
             for ( i = 0; i < keys.length; i++ ) {
               key = keys[ i ];
-              val = map[ key ];
+              val = update[ key ];
               ret.push( dump.parse( key, "key" ) + ": " +
                         dump.parse( val, undefined, stack ) );
             }
@@ -1933,7 +1933,7 @@
             }
             return " " + args.join( ", " ) + " ";
           },
-          // object calls it internally, the key part of an item in a map
+          // object calls it internally, the key part of an item in a update
           key: quote,
           // function calls it internally, it's the content of the function
           functionCode: "[code]",

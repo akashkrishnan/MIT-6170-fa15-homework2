@@ -16,6 +16,7 @@
 
     <div board>
       <div action-bar>
+        <div></div>
         <div button simulate play>Play</div>
         <div button reset>Reset</div>
       </div>
@@ -23,26 +24,36 @@
 
     <script>
 
-      var board = Board( document.querySelector( 'div[board]' ) ).rows( 100 ).cols( 100 ).gridlines( true ).build();
+      // Create a new 50x50 board that shows gridlines
+      var board = Board( document.querySelector( 'div[board]' ) ).rows( 50 ).cols( 50 ).gridlines( true ).build();
 
-      var game = GameOfLife( board );
+      // Create a new simulator with the new oard and original rules
+      var game = GameOfLife( board ).rules( OriginalRules() );
 
+      // Play/pause simulation button toggle
       document.querySelector( '[button][simulate]' ).addEventListener( 'click', function ( e ) {
         if ( e.target.hasAttribute( 'play' ) ) {
+
+          // Play button pressed; start simulation
           game.startSimulation();
           e.target.removeAttribute( 'play' );
           e.target.setAttribute( 'pause', '' );
           e.target.innerHTML = 'Pause';
+
         } else if ( e.target.hasAttribute( 'pause' ) ) {
+
+          // Pause button pressed; pause the simulation
           game.pauseSimulation();
           e.target.removeAttribute( 'pause' );
           e.target.setAttribute( 'play', '' );
           e.target.innerHTML = 'Play';
+
         } else {
           console.error( 'You should not be seeing this.' );
         }
       } );
 
+      // Reset simulation button
       document.querySelector( '[button][reset]' ).addEventListener( 'click', function () {
 
         game.resetSimulation();

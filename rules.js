@@ -1,14 +1,46 @@
 var Rules = function () {
 
-  var that = Object.create( Rules );
+  var that = Object.create( Rules.prototype );
 
-  that.original = function ( alive, n ) {
+  /**
+   * Determines whether a cell is alive or not in the next generation.
+   *
+   * @param {number} alive - 1 if cell is currently alive; 0 if cell is currently dead
+   * @param {number} n - number of living neighbors, including itself if cell is alive
+   * @returns {number} - 1 if cell is going to be alive; 0 if cell is going to be dead
+   */
+  that.isCellAlive = function ( alive, n ) { return alive };
+
+  Object.freeze( that );
+
+  return that;
+
+};
+
+var OriginalRules = function () {
+
+  var that = Object.create( Rules.prototype );
+
+  /**
+   * Determines whether a cell is alive or not in the next generation.
+   *
+   * @param {number} alive - 1 if cell is currently alive; 0 if cell is currently dead
+   * @param {number} n - number of living neighbors, including itself if cell is alive
+   * @returns {number} - 1 if cell is going to be alive; 0 if cell is going to be dead
+   */
+  that.isCellAlive = function ( alive, n ) {
 
     // Handle alive/dead cells separately
-    if ( alive ) {
-      return ( n < 3 || n > 4 ) ? 0 : 1;
-    } else {
-      return n === 3 ? 1 : 0;
+    switch ( n ) {
+      case 0:
+      case 1:
+        return 0;
+      case 2:
+        return alive;
+      case 3:
+        return 1;
+      default:
+        return 0;
     }
 
   };
