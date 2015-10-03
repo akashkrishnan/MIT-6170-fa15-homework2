@@ -52,9 +52,9 @@ var GameOfLife = function ( board ) {
     if ( simulationInterval ) {
       clearInterval( simulationInterval );
     }
-    population = board.getPopulation();
+    // population = board.getPopulation();
     board.setSimulating( true );
-    simulationInterval = setInterval( simulator, interval || 25 );
+    simulationInterval = setInterval( simulator, interval || 100 );
 
     return that;
 

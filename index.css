@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
 body {
   position: absolute;
   top: 0;
@@ -6,19 +8,19 @@ body {
   right: 0;
   display: flex;
   justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
 [action-bar] {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-bottom: 10px;
 }
 
-[action-bar] [button] {
-  padding: 10px;
-  border: 1px solid black;
+[action-bar] > div {
   margin-right: 10px;
-  cursor: pointer;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -26,6 +28,22 @@ body {
   user-select: none;
 }
 
-[action-bar] [button]:last-of-type {
+[action-bar] > div:last-of-type {
   margin-right: 0;
+}
+
+[button] {
+  padding: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+[button]:hover {
+  background-color: rgb(211, 72, 54);
+  color: white;
+}
+
+[button][active] {
+  background-color: rgb(211, 72, 54);
+  color: white;
 }

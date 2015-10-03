@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Project 2: Game of Life</title>
     <link rel="stylesheet" type="text/css" href="board.css">
+    <link rel="stylesheet" type="text/css" href="preset-selector.css">
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
 
@@ -17,7 +18,6 @@
 
     <div board>
       <div action-bar>
-        <div></div>
         <div preset-selector></div>
         <div button simulate play>Play</div>
         <div button reset>Reset</div>
@@ -30,6 +30,11 @@
 
         // Create a new 50x50 board that shows gridlines
         var board = Board( document.querySelector( 'div[board]' ) ).rows( 50 ).cols( 50 ).gridlines( true ).build();
+
+        var presetSelector = PresetSelector( document.querySelector( '[preset-selector]' ) )
+          .addSelectHandler( function ( name, pop ) {
+            board.setPopulation( pop );
+          } );
 
         // Create a new simulator with the new oard and original rules
         var game = GameOfLife( board ).rules( OriginalRules() );

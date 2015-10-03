@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * Constructs and returns a Board object. The Board object also renders itself in the DOM.
+ * Constructs and returns a Board object. The Board object also renders itself in the DOM. Cells cannot exist outside of
+ * the board. Therefore, stationary cells may form at the borders or cells may completely die off.
  *
  * @param {HTMLElement} container - the board will be rendered into this container element
  * @param {number} [rows=20] - positive number of rows of cells to show
